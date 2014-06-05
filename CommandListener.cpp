@@ -91,7 +91,6 @@ static const char* FILTER_OUTPUT[] = {
         OEM_IPTABLES_FILTER_OUTPUT,
         FirewallController::LOCAL_OUTPUT,
         BandwidthController::LOCAL_OUTPUT,
-        SecondaryTableController::LOCAL_FILTER_OUTPUT,
         NULL,
 };
 
@@ -109,7 +108,6 @@ static const char* MANGLE_POSTROUTING[] = {
 };
 
 static const char* MANGLE_OUTPUT[] = {
-        SecondaryTableController::LOCAL_MANGLE_EXEMPT,
         SecondaryTableController::LOCAL_MANGLE_OUTPUT,
         NULL,
 };
@@ -1172,9 +1170,11 @@ int CommandListener::ResolverCmd::runCommand(SocketClient *cli, int argc, char *
                     "Wrong number of arguments to resolver setifaceforuid", false);
             return 0;
         }
-    } else if (!strcmp(argv[1], "clearifaceforuidrange")) { // resolver clearifaceforuid <l> <h>
-        if (argc == 4) {
-            rc = sResolverCtrl->clearDnsInterfaceForUidRange(atoi(argv[2]), atoi(argv[3]));
+    } else if (!strcmp(argv[1], "clearifaceforuidrange")) {
+        // resolver clearifaceforuid <if> <l> <h>
+        if (argc == 5) {
+            rc = sResolverCtrl->clearDnsInterfaceForUidRange(argv[2], atoi(argv[3]),
+                    atoi(argv[4]));
         } else {
             cli->sendMsg(ResponseCode::CommandSyntaxError,
                     "Wrong number of arguments to resolver clearifaceforuid", false);

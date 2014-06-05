@@ -35,7 +35,6 @@ static const unsigned int MAX_IFACE_LENGTH = 15;
 static const int INTERFACES_TRACKED = 10;
 static const int BASE_TABLE_NUMBER = 60;
 static int MAX_TABLE_NUMBER = BASE_TABLE_NUMBER + INTERFACES_TRACKED;
-static const int PROTECT_MARK = 0x1;
 static const char *EXEMPT_PRIO = "99";
 static const char *RULE_PRIO = "100";
 
@@ -67,8 +66,8 @@ public:
     static const char* LOCAL_MANGLE_POSTROUTING;
     static const char* LOCAL_MANGLE_EXEMPT;
     static const char* LOCAL_MANGLE_IFACE_FORMAT;
+
     static const char* LOCAL_NAT_POSTROUTING;
-    static const char* LOCAL_FILTER_OUTPUT;
 
 
 private:
